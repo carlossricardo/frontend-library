@@ -1,0 +1,61 @@
+
+<div class="grid">
+    <div class="col-12 md:col-6">
+        <img class="border-round w-full" src="{{api}}/files/getFile/books/{{bookValue.image}}" 
+        style="min-height: 50px;; border-radius: 20px;" />
+    </div>
+    <div class="col-12 md:col-6">
+        <div >
+
+            <div class="flex flex-row justify-content-between align-items-start gap-2 mb-2">
+                <div>
+                    <div class="text-2xl font-semibold text-900">{{ bookValue.title }}</div>
+                    <span class="font-medium text-secondary text-sm mt-2">{{ bookValue.description }}</span>  
+                </div>
+                
+            </div>
+
+            <div class=" flex align-items-center gap-2 flex-wrap" *ngFor="let category of bookValue.categories">
+                <p-chip >
+                    <span class="text-sm font-medium">
+                        {{ category }}
+                    </span>
+                </p-chip>
+    
+            </div>
+    
+   
+            <div  class="flex flex-row justify-content-between align-items-start gap-2 mt-1">
+                <div>
+                    <span class="font-medium text-sm">De</span>
+                    <span class="font-bold text-900 text-sm ml-1">{{ bookValue.autor }}</span>                                 
+                    
+                </div>
+    
+            </div>
+            <div  class="flex flex-row justify-content-between align-items-start gap-2 mt-1">
+                <div>
+                    <span class="font-medium text-sm">Publicado en</span>
+                    <span class="font-bold text-900 text-sm ml-1">{{ bookValue.emission }}</span>                                 
+                    
+                </div>
+    
+            </div>
+            <div  class="flex flex-row justify-content-between align-items-start gap-2 mt-1">
+                <div>
+                    <span class="font-medium text-sm">Ejemplares disponibles</span>
+                    <span class="font-bold text-900 text-sm ml-1">{{ bookValue.units }}</span>                                 
+                    
+                </div>
+    
+            </div>
+            <div class="flex flex-column gap-4 mt-3">                                        
+                <div class="flex gap-2">
+                    <p-button (click)="addBooksToCart(bookValue.id)"  [disabled]="bookValue.units > 0 ? false: true" icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap" label="Adquirir"  />
+                    <p-button  icon="pi pi-heart" [outlined]="true" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

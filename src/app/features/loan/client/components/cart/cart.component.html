@@ -1,0 +1,164 @@
+
+
+<div class="col-12 ">
+
+    
+    
+    <div class="grid flex align-content-center align-items-center">
+        <div class="col-4 sm:col-2 md:col-2 lg:col-2">
+            <label class="text-700 text-lg font-semibold">Solicitud</label>
+
+        </div>
+        <div class="col-8 sm:col-10 md:col-10 lg:col-10">
+            <p-divider></p-divider>
+        </div>
+    </div>
+
+    <div class="">
+        <form  [formGroup]="formCart">
+    
+            <div class=" p-fluid p-formgrid grid  ">
+                <div class="field col-12 my-2  ">
+                    <p class="font-medium text-red-700">El campo es requerido (*)</p>
+                </div>
+    
+                <div class="field col-12 -mt-3   ">
+                    <label class="text-blue-700 font-medium" for="username">Nota adicional</label>                                        
+                    <textarea 
+                        placeholder="Ej. Necesito 4 ejemplares (especificar motivo, acalaración o justificación)." rows="3" cols="30"  
+                        pInputTextarea
+                        formControlName="note"
+                        
+                    ></textarea>
+             
+                </div> 
+    
+    
+    
+                <div class="field col-12 md:col-8  -mt-3   ">
+                    <label class="text-blue-700 font-medium">Fecha entrega*</label>                            
+        
+        
+                    <p-calendar 
+                        [showTime]="true" 
+                        
+                        formControlName="date_returned"  [ngClass]="{ 'is-invalid': fieldsValidate('returned_date')}" 
+                        placeholder=""
+                    />
+                    <small 
+                        *ngIf="formCart.get('date_returned')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-4  -mt-3   ">
+                    
+                    <label class="text-blue-700 font-medium">Total unidades</label>   <br>
+                    <div class="flex align-content-center flex-wrap">
+                        
+                        <div class="border-round border-1 border-gray-200  hover:surface-100 flex align-items-center justify-content-center w-full h-3rem">
+                            <span class="">{{ cartItemCount.value }}</span>
+                        </div>
+                        <!-- <div class="border-round surface-100  opacity-90 flex align-items-center justify-content-center w-full h-3rem">
+                            <span class="">{{ cartItemCount.value }}</span>
+                        </div> -->
+                    </div>
+                  
+    
+                        
+                </div> 
+    
+    
+            </div>
+    
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+<div class="col-12">
+
+    <div class="grid flex align-content-center align-items-center">
+        <div class="col-4 sm:col-2 md:col-2 lg:col-2">
+            <label class="text-700 text-lg font-semibold">Detalles</label>
+
+        </div>
+        <div class="col-8 sm:col-10 md:col-10 lg:col-10">
+            <p-divider></p-divider>
+        </div>
+    </div>
+
+    <p-dataView  
+    [value]="cartItems"
+    [lazy]="true"
+    (onLazyLoad)="findAllCart($event)"
+    
+    [loading]="loading"
+    emptyMessage="No hay datos disponibles."
+    
+    
+>
+
+
+
+    <ng-template pTemplate="list" let-books>
+
+        <div class="grid grid-nogutter">
+            <div class="col-12 " *ngFor="let item of books; let first = first " class="col-12">
+                <div class="flex flex-column md:flex-row align-items-center p-3 w-full" [ngClass]="{ 'border-top-1 surface-border': !first }">
+             
+                    <img class="my-4 md:my-0 w-9 md:w-10rem shadow-1 mr-5" src="{{api}}/files/getFile/books/{{item.book.image}}" style="max-width: 80px; max-height: 200px; border-radius: 10px;" />
+                    <div class="flex-1 flex flex-column  md:text-left">
+         
+                        <div>
+        
+                            <div class="text-md font-semibold text-900 mt-2">{{ item.book.title }}</div>
+                            <span class="font-medium text-secondary text-sm">{{ item.book.autor }}</span>
+                        </div>
+                        <div >
+                            
+                            <span class="font-medium text-secondary text-base md:text-xs"> {{ truncateText(item.book.description, 100) }} </span>
+                  
+                        </div>
+                    </div>
+                    <div class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">                    
+                        <p-button class=" align-self-center md:align-self-end" icon="pi pi-plus-circle" (click)="addBooksToCart( item.book.id )" [text]="true" [rounded]="true" [outlined]="true" />
+    
+                        <span class="text-xl align-self-center  font-semibold text-900 ">{{ item.quantity}}</span>
+                        <p-button icon="pi pi-minus-circle" (click)="reduceBooksToCart( item.id )" [text]="true" [rounded]="true" [outlined]="true" />
+                    </div>
+                </div>
+                <div class="flex justify-content-end -mt-2">                    
+                    <p-button label="Remover" (click)="removeCartItemBook( item.id )" [link]="true" />           
+                </div>
+            </div>
+
+        </div>
+        
+       
+    </ng-template>
+
+
+</p-dataView>
+
+
+<div class="text-center mb-4">
+
+
+    <p-button [disabled]="cartItems.length <= 0" label="Limpiar lista" (click)="removeAllCartItems()" [text]="true" severity="danger" />
+</div>
+
+<button 
+    [disabled]=" !formCart.valid || cartItems.length <= 0" 
+    pButton pRipple 
+    label="Realizar prestamo" 
+    class="w-full"
+    (click)="onClickCreateLoan()"
+    
+></button>
+
+
+
+</div>

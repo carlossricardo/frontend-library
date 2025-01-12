@@ -1,0 +1,93 @@
+<div class="grid">
+
+    <div  class="col-12 xl:col-12">
+
+
+        <div class="px-4 py-5 shadow-1 flex flex-column md:flex-row md:align-items-center justify-content-between mb-3" [ngStyle]="{borderRadius: '1rem', 
+            background: 'linear-gradient(0deg, rgba(213, 220, 229, 0.5), rgba(0, 123, 255, 0.5)),
+            linear-gradient(92.54deg, #4fb1fd 47.88%, #FFFFFF 100.01%)'}">
+            <div>
+                <div class="text-white font-medium text-xl mt-2 mb-3">Encuentra y gestiona tus libros aquí</div>
+                <div class="text-white font-bold text-4xl">Library app</div>
+            </div>
+
+
+         </div>
+
+
+    </div>   
+
+
+
+
+
+    <div class="col-12">
+
+
+
+        
+            <p-carousel 
+                [value]="itemsCarrousel" 
+                [numVisible]="3" 
+                [numScroll]="3" 
+                [circular]="false" 
+                [responsiveOptions]="responsiveOptions"
+                [autoplayInterval]="4000"
+            >
+                    <ng-template let-item pTemplate="item">
+          
+                        <div class="border-1 surface-border surface-card  hover:surface-50 border-round m-2 p-3">
+                            <p-tag                                            
+                                [severity]="item.units > 0 ? 'success': 'danger'">
+                                {{ item.units > 0 ? 'Disponible' : 'No disponible' }}
+                            </p-tag>
+                            <div class="mb-3 mt-2">
+                                <div class="flex justify-content-center">
+                                    <img 
+                                        src="{{api}}/files/getFile/books/{{item.image}}"
+                                        [alt]="item.name" 
+                                        class="w-6 border-round" />
+                                       
+                         
+                                </div>
+                            </div>
+                            <div class="text-center text-md font-semibold text-900 mt-1">
+                                {{ item.title }}
+                            </div>
+                            <div  class="flex flex-row justify-content-between align-items-start gap-2 mt-1">
+                                <div>
+                                    <span class="font-medium text-sm">De</span>
+                                    <span class="font-bold text-900 text-sm ml-1">{{ item.autor }}</span>                                 
+                                    
+                                </div>
+
+                            </div>
+                           
+                        </div>
+                    </ng-template>
+            </p-carousel>
+        
+    </div>
+
+    <div class="col-12 md:col-4 lg:col-6 xl:col-3" *ngFor="let item of items">
+        <div class="card shadow-1 hover:surface-50 mb-0">
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <span class="block text-500 font-medium mb-3">{{ item.name }}</span>
+                    <div class="text-900 font-medium text-xl">{{ item.value }}</div>
+                </div>
+                <div class="flex align-items-center justify-content-center {{ item.color }} border-round" [ngStyle]="{width: '2.5rem', height: '2.5rem'}">                    
+                    <i class="text-xl {{ item.icon }}"></i>
+                </div>
+            </div>
+            <span class="text-green-500 font-medium">24 new </span>
+            <span class="text-500">since last visit</span>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>

@@ -1,0 +1,91 @@
+<p-toast></p-toast>
+
+<div class="grid">
+
+    <div class="col-12">
+
+
+
+        <div class="card px-3 py-6">
+            <p class="font-semibold text-lg">Gestión de usuarios</p>
+
+
+
+
+            
+            <p-table
+                #dt
+                [value]="usersFilter"
+                [paginator]="true"
+                [rows]="50"
+                [lazy]="true"
+                (onLazyLoad)="findAll($event)"
+                [totalRecords]="totalRecords"
+                [loading]="loading"
+                styleClass="p-datatable-striped" 
+            >
+            
+            
+                <ng-template pTemplate="caption" >
+                    <div class="flex justify-content-end flex-wrap" >
+               
+                        <div class="flex align-items-center justify-content-center m-2 ">
+                            <div class="p-input-icon-left ">
+                                <i class="pi pi-search"></i>
+                                    <input pInputText type="text" placeholder="Buscar por Identificación"                                
+                                    (input)="applyFilterGlobal($event)"
+                                />                            
+                            </div>
+                        </div> 
+                    </div>
+                </ng-template>
+            
+            
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:20%" pResizableColumn>Registro</th>
+                        <th style="width:20%" pResizableColumn>Identificación</th>
+                        <th style="width:25%" pResizableColumn>Correo electrónico</th>
+                        <th style="width:25%" pResizableColumn>Nombres</th>                        
+                        <th style="width:20%"pResizableColumn>Última modificación</th>
+                        <th style="width:10%" pResizableColumn>Estado</th>
+                        <th style="text-align: center;width: 0%;" pResizableColumn>Acción</th>
+            
+                    </tr>
+                </ng-template>
+            
+            
+                <ng-template pTemplate="body" let-user>
+                    <tr>                        
+                        <td class="ellipsis">
+                            {{truncateText(user.id, 12)}}                             
+                        </td>
+                        <td class="ellipsis">{{user.identification}}</td>
+                        <td class="ellipsis">{{user.email}}</td>
+                        <td class="ellipsis">{{user.names}} {{user.surnames}} </td>
+                        <td class="ellipsis">{{user.updated_at  | date:'yyyy-MM-dd HH:mm:ss'}} </td> 
+                        <td class="ellipsis">           
+                            <p-tag [severity]="user.status === 1 ? 'success': 'danger'">
+                                {{ user.status === 1 ? 'Activo' : 'Inactivo' }}
+                            </p-tag>
+                        </td>                         
+                        <td>                                                 
+                            <div style="display: flex; justify-content: center; gap: 2px;">
+                                <button (click)="onClickUpdateUser( user )" pButton pRipple icon="pi pi-file-edit" class="mr-2" [text]="false" [raised]="true" [rounded]="true" ></button>                            
+                                <p-button (click)="onClickRemoveItem( user )" pbutton type="button" icon="pi pi-trash" [text]="false" [raised]="true" [rounded]="true"severity="secondary" ></p-button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            
+            
+            
+            </p-table>
+            
+        </div>
+
+    </div>
+
+
+</div>

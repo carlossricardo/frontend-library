@@ -1,0 +1,140 @@
+<div class="grid">
+
+    <div class="col-12 -mb-4">
+
+        <form  [formGroup]="formUser">
+
+
+            <div class=" p-fluid p-formgrid grid pt-2  ">
+
+
+                <div class="col-12 flex align-items-center justify-content-center">
+                    <div class="relative" style="position: relative; width: fit-content;">
+                        
+                        <p-image                         
+                            [src]="selectedFile.objectURL" 
+                            alt="Image" 
+                            class="border-round"
+                            [imageStyle]="{ 'border-radius': '10px', 'padding': '5px' }" 
+                            width="200px">
+                        </p-image>
+
+                        
+                        <button 
+                            pButton 
+                            [rounded]="true" 
+                            icon="pi pi-pen-to-square" 
+                            class="absolute top-0 right-0"
+                            style="margin: 8px; z-index: 10;"
+                            (click)="fileUpload.choose()">
+                        </button>
+
+                        
+                        <p-fileUpload 
+                            #fileUpload
+                            [customUpload]="true"
+                            [multiple]="false" 
+                            accept="image/*"
+                            (onSelect)="onFileSelect($event)"
+                            [style]="{ display: 'none' }">
+                        </p-fileUpload>
+                
+                        
+                    </div>
+                </div>
+                
+
+
+
+
+                <div class="field col-12 ">
+                    <p class="font-medium text-red-700">El campo es requerido (*)</p>
+                </div>
+
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Correo electrónico*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. name" type="text" 
+                        formControlName="email" [ngClass]="{ 'is-invalid': fieldsValidate('email')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formUser.get('email')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                    <small *ngIf="formUser.get('email')?.errors?.['email']">Debe ser un correo electrónico.</small>
+                </div> 
+    
+    
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Identificación*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. identification" type="text" 
+                        formControlName="identification" [ngClass]="{ 'is-invalid': fieldsValidate('identification')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formUser.get('identification')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                    <small *ngIf="formUser.get('identification')?.errors?.['cedulaInvalida']">La cédula es inválida.</small>
+                </div> 
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="names">Nombres*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. names" type="text" 
+                        formControlName="names" [ngClass]="{ 'is-invalid': fieldsValidate('names')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formUser.get('names')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="surnames">Apellidos*</label>                            
+                    <input 
+                        pInputText id="surnames" placeholder="Ej. names" type="text" 
+                        formControlName="surnames" [ngClass]="{ 'is-invalid': fieldsValidate('surnames')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formUser.get('surnames')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="phone">Telefono*</label>                            
+                    <input 
+                        pInputText id="phone" placeholder="Ej. phone" type="text" 
+                        formControlName="phone" [ngClass]="{ 'is-invalid': fieldsValidate('phone')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formUser.get('phone')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                    <small *ngIf="formUser.get('phone')?.errors?.['pattern']">Ingresa solo números.</small>
+                    <small *ngIf="formUser.get('phone')?.errors?.['pattern']">El teléfono debe contener exactamente 10 dígitos.</small>
+                </div> 
+                
+
+            </div>
+
+
+
+        </form>
+
+
+        <button 
+            pButton pRipple 
+            label="Guardar cambios"
+            [disabled]=" !isChange || !formUser.valid " 
+            
+            (click)="isChange ? onClickUpdateUser(): null"
+            class="w-full "
+        ></button>
+
+
+
+
+
+
+    </div>
+</div>
+

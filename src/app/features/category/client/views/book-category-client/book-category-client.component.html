@@ -1,0 +1,109 @@
+<div class="grid">
+
+    <div class="col-12">
+
+        <div class="card px-3 py-6">            
+             <p class="font-semibold text-lg">Libros por categorías</p>
+
+             
+
+            <p-dataView  
+                #dv 
+                [value]="filteredBooks"
+                [paginator]="true"
+                [rows]="50"
+                [lazy]="true"
+                (onLazyLoad)="findAllClientByCategory($event)"
+                [totalRecords]="totalRecords"
+                [loading]="loading"
+                layout="grid" 
+                emptyMessage="No hay datos disponibles."                               
+            >
+
+
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
+                        
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Filtrar por título" (input)="filterBooks($event)"  >
+                        </span>	
+                        
+                    </div>
+                </ng-template>
+
+
+      
+                <ng-template let-book pTemplate="grid" let-books>
+                    <div class="grid grid-nogutter">
+                        <div class="col-12 sm:col-6 md:col-4 lg:col-3 xl:col-3 p-1" *ngFor="let book of books">
+                            <div  class="px-3 py-3 border-1 surface-border surface-card  hover:surface-50 border-round flex flex-column">
+
+
+                                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                                    <div class="flex align-items-center">
+                                        <i class="pi pi-calendar-clock mr-2"></i>
+                                        <span class="font-semibold">{{book.emission | date:'yyyy'}}</span>
+                                    </div>
+                         
+
+                                    <p-tag [severity]="book.units > 0 ? 'success': 'danger'">
+                                        {{ book.units > 0 ? 'Disponible' : 'No disponible' }}
+                                    </p-tag>
+                                </div>
+                                <div class="flex justify-content-center">
+                                    <img 
+                                        (click)="onClickDetail( book )"
+                                        src="{{api}}/files/getFile/books/{{book.image}}"
+                                        [alt]="book.name" 
+                                        class="w-8 border-round  flex justify-content-center " 
+                                    />                                                    
+                                  
+                                </div>
+                                <div class="pt-1">
+
+                                    <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                        <div>
+                                            <div class="text-md font-semibold text-900 mt-1">{{ book.title }}</div>
+                                            <span class="font-medium text-secondary text-base md:text-xs">{{ truncateText(book.description, 100) }}</span>  
+                                        </div>
+                                        
+                                    </div>
+                                    <div  class="flex flex-row justify-content-between align-items-start gap-2 mt-1">
+                                        <div>
+                                            <span class="font-medium text-sm">De</span>
+                                            <span class="font-bold text-900 text-sm ml-1">{{ book.autor }}</span>                                 
+                                            
+                                        </div>
+
+                                    </div>
+                                    <div class="flex flex-column gap-4 mt-2">                                        
+                                        <div class="flex gap-2">
+                                            <p-button (click)="addBooksToCart( book.id )" [disabled]="book.units > 0 ? false: true" icon="pi pi-shopping-cart" class="flex-auto md:flex-initial white-space-nowrap" label="Adquirir"  />
+                                            <p-button  icon="pi pi-heart" [outlined]="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+
+            </p-dataView>
+
+
+
+           
+        
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+
