@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,  
-  apiUrl: 'http://localhost:8000/api',
+  apiUrl: 'https://backend-library-production-1ad9.up.railway.app/api',
+  // apiUrl: 'http://localhost:8000/api',
 
 };
 
