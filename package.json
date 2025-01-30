@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "install": "npm install --force",
     "start": "ng serve",    
-    "build": "npm ci --force",    
+    "build": "ng build",    
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
